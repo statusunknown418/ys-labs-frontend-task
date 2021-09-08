@@ -153,7 +153,8 @@ export default function Home() {
                 >
                   <AlertDialogOverlay>
                     <AlertDialogHeader>
-                      Sorry!! but you can't add more Pokemons to your pocket 😭
+                      Sorry!! but you can&apos;t add more Pokemons to your
+                      pocket 😭
                       <Button onClick={() => setOpen(false)}>Okay</Button>
                     </AlertDialogHeader>
                   </AlertDialogOverlay>
