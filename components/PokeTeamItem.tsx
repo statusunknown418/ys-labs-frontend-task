@@ -118,7 +118,13 @@ export const PokeTeamItem: FC<Props> = (props) => {
         <DrawerOverlay />
         <DrawerContent bg="whiteAlpha.900">
           <DrawerHeader>
-            <Heading textTransform="capitalize">{props.name}</Heading>
+            <Heading
+              textTransform="capitalize"
+              bgGradient="linear(to-l, #805ad5, #FF0290)"
+              bgClip="text"
+            >
+              {props.name}
+            </Heading>
           </DrawerHeader>
           <DrawerBody>
             <Flex>
@@ -133,7 +139,7 @@ export const PokeTeamItem: FC<Props> = (props) => {
               <Heading fontSize="lg" mr="2">
                 Height:{" "}
               </Heading>
-              <Heading fontSize="lg" color="blue.500">
+              <Heading fontSize="lg" color="blue.600">
                 {props.pokeDetails.height}m
               </Heading>
             </Flex>
@@ -165,7 +171,9 @@ export const PokeTeamItem: FC<Props> = (props) => {
                 props.pokeDetails.moves.map((m, key) => (
                   <ListItem key={key}>
                     <FontAwesomeIcon color="purple" icon={faCheckDouble} />
-                    <Badge>{m.move.name}</Badge>
+                    <Badge mx="2" colorScheme="blackAlpha">
+                      {m.move.name}
+                    </Badge>
                   </ListItem>
                 ))
               ) : (
