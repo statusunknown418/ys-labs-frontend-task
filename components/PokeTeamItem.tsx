@@ -121,12 +121,22 @@ export const PokeTeamItem: FC<Props> = (props) => {
             <Heading textTransform="capitalize">{props.name}</Heading>
           </DrawerHeader>
           <DrawerBody>
-            <Text mb={5}>
-              Height:{" "}
-              <strong style={{ color: "green" }}>
+            <Flex>
+              <Heading fontSize="lg" mr="2">
+                Base XP:
+              </Heading>
+              <Heading color="purple.600" fontSize="lg">
+                {props.pokeDetails.base_experience}
+              </Heading>
+            </Flex>
+            <Flex my={5}>
+              <Heading fontSize="lg" mr="2">
+                Height:{" "}
+              </Heading>
+              <Heading fontSize="lg" color="blue.500">
                 {props.pokeDetails.height}m
-              </strong>
-            </Text>
+              </Heading>
+            </Flex>
             {props.pokeDetails.sprites && (
               <Image
                 src={props.pokeDetails.sprites.front_default}
@@ -135,7 +145,6 @@ export const PokeTeamItem: FC<Props> = (props) => {
               />
             )}
             <Heading fontSize="2xl">My Abilities</Heading>
-
             <Flex flexWrap="wrap" my="3">
               {props.pokeDetails.abilities.length > 0 ? (
                 props.pokeDetails.abilities.map((a) => (

@@ -44,7 +44,7 @@ export const PokeCard: FC<Props> = ({
       <Heading color="white" textAlign="center" textTransform="uppercase">
         {pokemonData.name}
       </Heading>
-      <Box mt={3} bg="whiteAlpha.300" p={2} rounded="lg">
+      <Box mt={3} bg="whiteAlpha.200" p={3} rounded="lg">
         <Flex as="div">
           <Heading fontSize="xl" color="purple.300" mr={10}>
             HP: {pokemonData.stats[0].base_stat}
@@ -70,12 +70,39 @@ export const PokeCard: FC<Props> = ({
       </Box>
 
       <Center>
-        <Flex as="div">
-          {pokemonData.abilities.map((a) => (
-            <Tag key={a.slot} colorScheme="teal" mx="3">
-              {a.ability.name}
+        <Flex as="div" alignItems="center">
+          {pokemonData.types.length === 1 ? (
+            <Heading
+              rounded="lg"
+              fontSize="md"
+              color="white"
+              p="2"
+              bgColor="whiteAlpha.200"
+            >
+              My Type
+            </Heading>
+          ) : (
+            <Heading
+              rounded="lg"
+              fontSize="md"
+              color="white"
+              p="2"
+              bgColor="whiteAlpha.200"
+            >
+              My Types &rarr;
+            </Heading>
+          )}
+          {pokemonData.types.length > 0 ? (
+            pokemonData.types.map((a) => (
+              <Tag colorScheme="yellow" key={a.slot} mx="3">
+                {a.type.name}
+              </Tag>
+            ))
+          ) : (
+            <Tag colorScheme="yellow" mx="3">
+              {pokemonData.types[0].type.name}
             </Tag>
-          ))}
+          )}
         </Flex>
       </Center>
       <Center mt="10">
