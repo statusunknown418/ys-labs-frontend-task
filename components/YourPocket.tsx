@@ -12,7 +12,7 @@ export const YourPocket: FC<Props> = ({ fnSetPokes, dataUserPokes }) => {
     <Grid gap={5}>
       <Box p="5" rounded="lg" bgColor="#343d64" color="white">
         <Heading fontSize="2xl" color="white" fontWeight="extrabold" mb={2}>
-          Your Pocket
+          Your Team!
         </Heading>
         <Text mb="4">
           Add up to <span style={{ fontWeight: "bolder" }}>6</span> pokemons to
