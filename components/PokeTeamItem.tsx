@@ -116,7 +116,7 @@ export const PokeTeamItem: FC<Props> = (props) => {
         finalFocusRef={ref}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bg="whiteAlpha.800">
           <DrawerHeader>
             <Heading textTransform="capitalize">{props.name}</Heading>
           </DrawerHeader>
