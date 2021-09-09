@@ -21,7 +21,6 @@ export const SearchForPoke: FC<Props> = ({
   useEffect(() => {
     setSearch("");
   }, []);
-  console.log(search);
 
   const [loading, setLoading] = useState(false);
   return (

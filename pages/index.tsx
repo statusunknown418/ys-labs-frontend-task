@@ -78,7 +78,6 @@ export default function Home() {
         isClosable: true,
       });
     if (errToAdd > 0) {
-      console.log(err2);
       toast({
         title: "Limit Reached ",
         status: "warning",
@@ -86,7 +85,6 @@ export default function Home() {
       });
       return;
     }
-    console.log(storedUserTeam.length);
   };
 
   /*
