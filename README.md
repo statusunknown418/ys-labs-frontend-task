@@ -18,4 +18,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Note
 
-- The project was made using the Mobile-First approach, that's why it's more optimized for using with a phone (up to 432px wide)
+- The project was made using the Mobile-First approach, that's why it's more optimized for using with a phone (minimun 432px wide)
