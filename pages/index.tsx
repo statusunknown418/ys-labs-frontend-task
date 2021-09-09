@@ -34,10 +34,11 @@ export default function Home() {
   const BASE_URL = "https://pokeapi.co/api/v2";
   const [userPokes, setUserPokes] = useState([]);
   const [pokemonData, setPokemonData] = useState(null);
-  const [waiting, setWating] = useState<boolean>(false);
+  const [waiting, setWating] = useState(false);
   const [userPokeData, setUserPokeData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   const [storedUserTeam, setStoredUserTeam] = useLocalStorage(
@@ -92,9 +93,9 @@ export default function Home() {
    * Get random poke
    */
   const generateRandomPoke = (s, f) => {
-    setWating(true);
     const number = Math.floor(Math.random() * (f - s)) + s;
     try {
+      setWating(true);
       fetch(`${BASE_URL}/pokemon/${number}`)
         .then((res) => res.json())
         .then((res) => {
@@ -102,7 +103,6 @@ export default function Home() {
           setPokemonData(res);
           console.log(res);
         });
-      setWating(false);
     } catch (err) {
       console.log(err);
     }
@@ -116,10 +116,11 @@ export default function Home() {
         return;
       }
       (query === "" || undefined) && alert("Please enter your search");
-
+      setLoading(true);
       const userPokeData = await getSpecificPoke(query);
       setUserPokeData(userPokeData);
       console.log(userPokeData);
+      setLoading(false);
     } catch (err) {
       console.log(err);
       alert("This pokemon does not exist");
@@ -158,6 +159,7 @@ export default function Home() {
             }}
           />
           {/* User Poke Card showing */}
+          {loading && <Spinner color="yellow.200" size="xl" />}
           {userPokeData && <UserDefinedPoke poke={userPokeData} />}
 
           {/* User Team Component */}
@@ -182,11 +184,11 @@ export default function Home() {
           {/* Waiting spinner */}
           {waiting && (
             <Center mt={20}>
-              <Spinner size="xl" />
+              <Spinner size="xl" color="yellow.200" />
             </Center>
           )}
           {/* Showing the Card */}
-          {!waiting && pokemonData && (
+          {pokemonData && (
             <PokeCard
               addToTeam={addToUserPocket}
               setFn={setStoredUserTeam}

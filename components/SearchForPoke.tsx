@@ -2,7 +2,8 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
-import { Heading, Box, Text, Flex } from "@chakra-ui/react";
+import { Heading, Box, Text, Flex, Spinner } from "@chakra-ui/react";
+
 type Props = {
   getPoKemonName: (...args) => void;
   addToUserTeam: (...args) => void;
@@ -21,6 +22,8 @@ export const SearchForPoke: FC<Props> = ({
     setSearch("");
   }, []);
   console.log(search);
+
+  const [loading, setLoading] = useState(false);
   return (
     <FormControl id="searchPoke" minW="sm" maxW="2xl" color="white">
       <FormLabel fontSize="sm">Search for a Pokemon</FormLabel>
@@ -40,7 +43,8 @@ export const SearchForPoke: FC<Props> = ({
           Search!
         </Button>
       </Flex>
-      {pokemonData && (
+      {loading && <Spinner />}
+      {pokemonData && !loading && (
         <Button
           mt="2"
           fontSize="sm"

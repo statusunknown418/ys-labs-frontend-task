@@ -26,6 +26,7 @@ import {
   List,
   Grid,
   ListIcon,
+  Flex,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -123,7 +124,7 @@ export const PokeTeamItem: FC<Props> = (props) => {
             <Text mb={5}>
               Height:{" "}
               <strong style={{ color: "green" }}>
-                {props.pokeDetails.height}
+                {props.pokeDetails.height}m
               </strong>
             </Text>
             {props.pokeDetails.sprites && (
@@ -133,11 +134,25 @@ export const PokeTeamItem: FC<Props> = (props) => {
                 height={100}
               />
             )}
+            <Heading fontSize="2xl">My Abilities</Heading>
+
+            <Flex flexWrap="wrap" my="3">
+              {props.pokeDetails.abilities.length > 0 ? (
+                props.pokeDetails.abilities.map((a) => (
+                  <Badge key={a.slot} colorScheme="purple" m="2">
+                    {a.ability.name}
+                  </Badge>
+                ))
+              ) : (
+                <Badge>I don&apos;t have any recorded abilities 😰</Badge>
+              )}
+            </Flex>
+
             <Heading fontSize="2xl" mb="5">
               My Moves
             </Heading>
             <List>
-              {props.pokeDetails.moves ? (
+              {props.pokeDetails.moves.length > 0 ? (
                 props.pokeDetails.moves.map((m, key) => (
                   <ListItem key={key}>
                     <FontAwesomeIcon color="purple" icon={faCheckDouble} />
