@@ -18,6 +18,7 @@ import { SearchForPoke } from "../components/SearchForPoke";
 import { UserDefinedPoke } from "../components/UserDefinedPoke";
 import { YourPocket } from "../components/YourPocket";
 import { getSpecificPoke } from "../utils/getPokemon";
+import { useLocalStorage } from "../utils/useLocalStorage";
 
 export default function Home() {
   // TODO CLEANUP A BIT HUH
@@ -27,18 +28,26 @@ export default function Home() {
   const [waiting, setWating] = useState<boolean>(false);
   const [userPokeData, setUserPokeData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState(false);
   const toast = useToast();
+
+  const [storedUserTeam, setStoredUserTeam] = useLocalStorage(
+    "userPokemons",
+    []
+  );
 
   const addToUserPocket = (pokemon) => {
     let newPoke = pokemon;
     let err2 = 0;
-    userPokes.length === 0
-      ? console.log("nothing to add")
-      : userPokes.forEach((e) => {
-          e.id === newPoke.id ? err2++ : console.log("alright");
-        });
+    pokemon === null || (pokemon === undefined && err2++);
+    storedUserTeam.length === 6 && err2++;
 
-    err2 === 0 && setUserPokes((prev) => [...prev, newPoke]);
+    storedUserTeam.forEach((e) => {
+      e.id === newPoke.id ? err2++ : console.log("alright");
+    });
+
+    // err2 === 0 && setUserPokes((prev) => [...prev, newPoke]);
+    err2 === 0 && setStoredUserTeam([...storedUserTeam, newPoke]);
     err2 === 0 &&
       toast({
         title: "Pokemon added to your team!",
@@ -47,12 +56,23 @@ export default function Home() {
         isClosable: true,
       });
     err2 > 0 &&
+      err2 < 2 &&
       toast({
         title: "You already have this Pokemon",
         status: "error",
         duration: 1500,
         isClosable: true,
       });
+    if (err2 >= 2) {
+      console.log(err2);
+      toast({
+        title: "Limit Reached ",
+        status: "warning",
+        duration: 1500,
+      });
+      return;
+    }
+    console.log(storedUserTeam.length);
   };
 
   /*
@@ -61,19 +81,29 @@ export default function Home() {
   const generateRandomPoke = (s, f) => {
     setWating(true);
     const number = Math.floor(Math.random() * (f - s)) + s;
-    fetch(`${BASE_URL}/pokemon/${number}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setWating(false);
-        setPokemonData(res);
-        console.log(res);
-      });
-    setWating(false);
+    try {
+      fetch(`${BASE_URL}/pokemon/${number}`)
+        .then((res) => res.json())
+        .then((res) => {
+          setWating(false);
+          setPokemonData(res);
+          console.log(res);
+        });
+      setWating(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   // -------------------------------------------------
 
-  const fetchThePoke = async (query) => {
+  const fetchThePoke = async (query: string) => {
     try {
+      if (query.length === 0 || query === undefined || query === null) {
+        alert("please enter a search param");
+        return;
+      }
+      (query === "" || undefined) && alert("Please enter your search");
+
       const userPokeData = await getSpecificPoke(query);
       setUserPokeData(userPokeData);
       console.log(userPokeData);
@@ -108,7 +138,10 @@ export default function Home() {
           </Heading>
 
           {/* User Team Component */}
-          <YourPocket fnSetPokes={setUserPokes} dataUserPokes={userPokes} />
+          <YourPocket
+            fnSetPokes={setStoredUserTeam}
+            dataUserPokes={storedUserTeam}
+          />
         </Box>
         <Button
           colorScheme="telegram"
@@ -119,7 +152,15 @@ export default function Home() {
           Generate New poke without refreshing the page!
         </Button>
 
-        <SearchForPoke getPoKemonName={fetchThePoke} />
+        <SearchForPoke
+          getPoKemonName={fetchThePoke}
+          pokemonData={userPokeData}
+          addToUserTeam={addToUserPocket}
+          setterFn={() => {
+            setUserPokeData([]);
+          }}
+        />
+
         {/* Waiting spinner */}
         {waiting && (
           <Center mt={20}>
@@ -127,19 +168,13 @@ export default function Home() {
           </Center>
         )}
         {/* User Poke Card showing */}
-        {userPokeData && (
-          <UserDefinedPoke
-            poke={userPokeData}
-            inTeamPokeData={userPokes}
-            fnSetInTeam={addToUserPocket}
-          />
-        )}
+        {userPokeData && <UserDefinedPoke poke={userPokeData} />}
         {/* Showing the Card */}
         {!waiting && pokemonData && (
           <PokeCard
             addToTeam={addToUserPocket}
-            setFn={setUserPokes}
-            userPokes={userPokes}
+            setFn={setStoredUserTeam}
+            userPokes={storedUserTeam}
             pokemonData={pokemonData}
           />
         )}

@@ -40,17 +40,18 @@ export const YourPocket: FC<Props> = ({ fnSetPokes, dataUserPokes }) => {
 
           {/* ------------------------------- */}
           {/* Current User Pokemons */}
-          {dataUserPokes.map((p, key) => (
-            <div key={key}>
-              <PokeTeamItem
-                pokeDetails={p}
-                name={p.name}
-                onDelete={() =>
-                  fnSetPokes(dataUserPokes.filter((u2) => u2.id !== p.id))
-                }
-              />
-            </div>
-          ))}
+          {dataUserPokes &&
+            dataUserPokes.map((p, key) => (
+              <div key={key}>
+                <PokeTeamItem
+                  pokeDetails={p}
+                  name={p.name}
+                  onDelete={() =>
+                    fnSetPokes(dataUserPokes.filter((u2) => u2.id !== p.id))
+                  }
+                />
+              </div>
+            ))}
           {/* ------------------------------ */}
         </Grid>
       </Flex>

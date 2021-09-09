@@ -5,9 +5,17 @@ import { FC, useState } from "react";
 import { Heading, Box } from "@chakra-ui/react";
 type Props = {
   getPoKemonName: (...args) => void;
+  addToUserTeam: (...args) => void;
+  pokemonData: any;
+  setterFn?: (...args) => void;
 };
 
-export const SearchForPoke: FC<Props> = ({ getPoKemonName }) => {
+export const SearchForPoke: FC<Props> = ({
+  getPoKemonName,
+  addToUserTeam,
+  pokemonData,
+  setterFn,
+}) => {
   const [search, setSearch] = useState("");
   console.log(search);
   return (
@@ -25,6 +33,16 @@ export const SearchForPoke: FC<Props> = ({ getPoKemonName }) => {
       >
         Search!
       </Button>
+      {pokemonData && (
+        <Button
+          colorScheme="green"
+          onClick={() => {
+            addToUserTeam(pokemonData);
+          }}
+        >
+          Add Current Pokemon!
+        </Button>
+      )}
     </FormControl>
   );
 };

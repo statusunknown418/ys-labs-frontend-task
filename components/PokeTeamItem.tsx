@@ -49,7 +49,7 @@ export const PokeTeamItem: FC<Props> = (props) => {
         <Text fontSize="md" fontWeight="bold" textTransform="capitalize">
           {props.name}
         </Text>
-        {props.pokeDetails.sprites.front_default && (
+        {props.pokeDetails.sprites && (
           <Image
             src={props.pokeDetails.sprites.front_default}
             width={50}
@@ -107,16 +107,18 @@ export const PokeTeamItem: FC<Props> = (props) => {
                   {props.pokeDetails.height}
                 </strong>
               </Text>
-              <Image
-                src={props.pokeDetails.sprites.front_default}
-                width={100}
-                height={100}
-              />
+              {props.pokeDetails.sprites && (
+                <Image
+                  src={props.pokeDetails.sprites.front_default}
+                  width={100}
+                  height={100}
+                />
+              )}
               <Heading fontSize="2xl" mb="5">
                 My Moves
               </Heading>
               <List>
-                {props.pokeDetails.moves.length !== 0 ? (
+                {props.pokeDetails.moves ? (
                   props.pokeDetails.moves.map((m, key) => (
                     <ListItem key={key}>
                       <FontAwesomeIcon color="purple" icon={faCheckDouble} />
