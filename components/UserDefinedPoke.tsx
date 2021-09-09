@@ -39,11 +39,40 @@ export const UserDefinedPoke: FC<Props> = ({ poke }) => {
         )}
       </Box>
       <Flex as="div">
-        {poke.abilities.map((a) => (
-          <Tag key={a.slot} colorScheme="teal" mx="3">
-            {a.ability.name}
-          </Tag>
-        ))}
+        <Flex as="div" alignItems="center">
+          {poke.types.length === 1 ? (
+            <Heading
+              rounded="lg"
+              fontSize="md"
+              color="white"
+              p="2"
+              bgColor="whiteAlpha.200"
+            >
+              My Type &rarr;
+            </Heading>
+          ) : (
+            <Heading
+              rounded="lg"
+              fontSize="md"
+              color="white"
+              p="2"
+              bgColor="whiteAlpha.200"
+            >
+              My Types &rarr;
+            </Heading>
+          )}
+          {poke.types.length > 0 ? (
+            poke.types.map((a) => (
+              <Tag colorScheme="yellow" key={a.slot} mx="3">
+                {a.type.name}
+              </Tag>
+            ))
+          ) : (
+            <Tag colorScheme="yellow" mx="3">
+              {poke.types[0].type.name}
+            </Tag>
+          )}
+        </Flex>
       </Flex>
     </Grid>
   );

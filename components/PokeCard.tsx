@@ -79,7 +79,7 @@ export const PokeCard: FC<Props> = ({
               p="2"
               bgColor="whiteAlpha.200"
             >
-              My Type
+              My Type &rarr;
             </Heading>
           ) : (
             <Heading
