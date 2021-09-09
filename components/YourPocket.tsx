@@ -9,52 +9,55 @@ type Props = {
 
 export const YourPocket: FC<Props> = ({ fnSetPokes, dataUserPokes }) => {
   return (
-    <div>
-      <Flex direction="row" mt={10}>
-        <Box width="50%" p="5" mr="5" rounded="lg">
-          <Heading fontSize="2xl" color="indigo">
-            Your Pocket
-          </Heading>
-          <Text>
-            Add up to <span style={{ fontWeight: "bolder" }}>6</span> pokemons
-            to your list
-          </Text>
-          <Button
-            colorScheme="red"
-            onClick={() => {
-              fnSetPokes([]);
-            }}
-          >
-            Delete All
-          </Button>
-        </Box>
-        <Grid
-          templateColumns="repeat(3,1fr)"
-          width="50%"
-          p="5"
-          bg="orange.100"
-          rounded="lg"
-          placeItems="center"
+    <Grid gap={5}>
+      <Box p="5" rounded="lg" bgColor="#343d64" color="white">
+        <Heading fontSize="2xl" color="white" fontWeight="extrabold" mb={2}>
+          Your Pocket
+        </Heading>
+        <Text mb="4">
+          Add up to <span style={{ fontWeight: "bolder" }}>6</span> pokemons to
+          your list
+        </Text>
+        <Button
+          colorScheme="red"
+          fontSize="sm"
+          onClick={() => {
+            fnSetPokes([]);
+          }}
         >
-          {/* Alert when limit is achieved */}
-
-          {/* ------------------------------- */}
-          {/* Current User Pokemons */}
-          {dataUserPokes &&
-            dataUserPokes.map((p, key) => (
-              <div key={key}>
-                <PokeTeamItem
-                  pokeDetails={p}
-                  name={p.name}
-                  onDelete={() =>
-                    fnSetPokes(dataUserPokes.filter((u2) => u2.id !== p.id))
-                  }
-                />
-              </div>
-            ))}
-          {/* ------------------------------ */}
-        </Grid>
-      </Flex>
-    </div>
+          Delete All
+        </Button>
+      </Box>
+      <Grid
+        templateColumns="repeat(2,1fr)"
+        p={10}
+        bg="purple.500"
+        rounded="lg"
+        placeItems="center"
+        gap={5}
+        width="md"
+        minHeight="sm"
+      >
+        {dataUserPokes.length === 0 && (
+          <Heading gridColumn="1 / span 2" p={5} color="blackAlpha.600">
+            You don&apos;t have any Pokemons in your team yet
+          </Heading>
+        )}
+        {/* Current User Pokemons */}
+        {dataUserPokes &&
+          dataUserPokes.map((p, key) => (
+            <div key={key}>
+              <PokeTeamItem
+                pokeDetails={p}
+                name={p.name}
+                onDelete={() =>
+                  fnSetPokes(dataUserPokes.filter((u2) => u2.id !== p.id))
+                }
+              />
+            </div>
+          ))}
+        {/* ------------------------------ */}
+      </Grid>
+    </Grid>
   );
 };

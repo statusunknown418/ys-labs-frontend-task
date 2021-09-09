@@ -24,6 +24,7 @@ import {
   useDisclosure,
   ListItem,
   List,
+  Grid,
   ListIcon,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,100 +45,117 @@ export const PokeTeamItem: FC<Props> = (props) => {
   const infoToast = useToast();
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div>
-      <Box>
-        <Text fontSize="md" fontWeight="bold" textTransform="capitalize">
-          {props.name}
-        </Text>
-        {props.pokeDetails.sprites && (
-          <Image
-            src={props.pokeDetails.sprites.front_default}
-            width={50}
-            height={50}
-          />
-        )}
+    <Grid
+      placeItems="center"
+      bgColor="purple.400"
+      p="5"
+      rounded="lg"
+      color="white"
+    >
+      <Heading fontSize="lg" fontWeight="extrabold" textTransform="capitalize">
+        {props.name}
+      </Heading>
+      {props.pokeDetails.sprites && (
+        <Image
+          src={props.pokeDetails.sprites.front_default}
+          width={50}
+          height={50}
+        />
+      )}
 
-        <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<FontAwesomeIcon icon={faChevronCircleDown} />}
-          >
-            Options
-          </MenuButton>
-          <MenuList padding="0" overflow="hidden">
-            <MenuItem
-              minH="48px"
-              minW="20px"
-              onClick={() => {
-                props.onDelete();
-                infoToast({
-                  title: "Pokemon removed from your team",
-                  status: "info",
-                  duration: 1000,
-                });
-              }}
-            >
-              <Text fontWeight="bold" textColor="red.500">
-                Delete
-              </Text>
-            </MenuItem>
-            <MenuItem minH="48px" minW="20px" ref={ref} onClick={onOpen}>
-              <Text fontWeight="bold"> More Info</Text>
-            </MenuItem>
-          </MenuList>
-        </Menu>
-
-        {/* Drawer to show details */}
-
-        <Drawer
-          isOpen={isOpen}
-          placement="right"
-          onClose={onClose}
-          finalFocusRef={ref}
+      <Menu>
+        <MenuButton
+          bgColor="purple.800"
+          fontSize="sm"
+          as={Button}
+          rightIcon={<FontAwesomeIcon icon={faChevronCircleDown} />}
+          _hover={{ bgColor: "purple" }}
         >
-          <DrawerOverlay />
-          <DrawerContent>
-            <DrawerHeader>
-              <Heading textTransform="capitalize">{props.name}</Heading>
-            </DrawerHeader>
-            <DrawerBody>
-              <Text mb={5}>
-                Height:{" "}
-                <strong style={{ color: "green" }}>
-                  {props.pokeDetails.height}
-                </strong>
-              </Text>
-              {props.pokeDetails.sprites && (
-                <Image
-                  src={props.pokeDetails.sprites.front_default}
-                  width={100}
-                  height={100}
-                />
+          Options
+        </MenuButton>
+        <MenuList padding="0" overflow="hidden" bgColor="purple.900">
+          <MenuItem
+            minH="48px"
+            minW="20px"
+            onClick={() => {
+              props.onDelete();
+              infoToast({
+                title: "Pokemon removed from your team",
+                status: "info",
+                duration: 1000,
+              });
+            }}
+          >
+            <Text
+              fontWeight="bold"
+              textColor="red.300"
+              _hover={{ color: "#ff0000" }}
+            >
+              Delete
+            </Text>
+          </MenuItem>
+          <MenuItem
+            minH="48px"
+            minW="20px"
+            ref={ref}
+            onClick={onOpen}
+            _hover={{ color: "black" }}
+          >
+            <Text fontWeight="bold"> More Info</Text>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+
+      {/* Drawer to show details */}
+
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={ref}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>
+            <Heading textTransform="capitalize">{props.name}</Heading>
+          </DrawerHeader>
+          <DrawerBody>
+            <Text mb={5}>
+              Height:{" "}
+              <strong style={{ color: "green" }}>
+                {props.pokeDetails.height}
+              </strong>
+            </Text>
+            {props.pokeDetails.sprites && (
+              <Image
+                src={props.pokeDetails.sprites.front_default}
+                width={100}
+                height={100}
+              />
+            )}
+            <Heading fontSize="2xl" mb="5">
+              My Moves
+            </Heading>
+            <List>
+              {props.pokeDetails.moves ? (
+                props.pokeDetails.moves.map((m, key) => (
+                  <ListItem key={key}>
+                    <FontAwesomeIcon color="purple" icon={faCheckDouble} />
+                    <Badge>{m.move.name}</Badge>
+                  </ListItem>
+                ))
+              ) : (
+                <Badge>I don&apos;t have any recorded movements 😰</Badge>
               )}
-              <Heading fontSize="2xl" mb="5">
-                My Moves
-              </Heading>
-              <List>
-                {props.pokeDetails.moves ? (
-                  props.pokeDetails.moves.map((m, key) => (
-                    <ListItem key={key}>
-                      <FontAwesomeIcon color="purple" icon={faCheckDouble} />
-                      <Badge>{m.move.name}</Badge>
-                    </ListItem>
-                  ))
-                ) : (
-                  <Badge>I don&apos;t have any recorded movements 😰</Badge>
-                )}
-              </List>
-            </DrawerBody>
-            <DrawerFooter>
-              <Button colorScheme="blue" onClick={onClose}>
-                Great
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      </Box>
-    </div>
+            </List>
+          </DrawerBody>
+          <DrawerFooter>
+            <Button colorScheme="blue" onClick={onClose}>
+              Great
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </Grid>
   );
 };

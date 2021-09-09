@@ -2,7 +2,7 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
 import { FC, useEffect, useState } from "react";
-import { Heading, Box } from "@chakra-ui/react";
+import { Heading, Box, Text, Flex } from "@chakra-ui/react";
 type Props = {
   getPoKemonName: (...args) => void;
   addToUserTeam: (...args) => void;
@@ -22,28 +22,34 @@ export const SearchForPoke: FC<Props> = ({
   }, []);
   console.log(search);
   return (
-    <FormControl id="searchPoke" maxW="4xl">
-      <FormLabel>Search for a Pokemon</FormLabel>
-      <Input
-        type="text"
-        placeholder="Search for your desired Pokemon"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <Button
-        type="submit"
-        colorScheme="orange"
-        onClick={() => getPoKemonName(search)}
-      >
-        Search!
-      </Button>
+    <FormControl id="searchPoke" maxW="4xl" color="white">
+      <FormLabel fontSize="sm">Search for a Pokemon</FormLabel>
+      <Flex alignItems="center">
+        <Input
+          type="text"
+          placeholder="Search for your desired Pokemon"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button
+          fontSize="sm"
+          mx={2}
+          type="submit"
+          colorScheme="yellow"
+          onClick={() => getPoKemonName(search)}
+        >
+          Search!
+        </Button>
+      </Flex>
       {pokemonData && (
         <Button
-          colorScheme="green"
+          mt={2}
+          fontSize="sm"
+          colorScheme="purple"
           onClick={() => {
             addToUserTeam(pokemonData);
           }}
         >
-          Add Current Pokemon!
+          Add searched Pokemon!
         </Button>
       )}
     </FormControl>
