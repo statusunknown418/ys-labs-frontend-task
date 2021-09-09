@@ -35,7 +35,8 @@ export const YourPocket: FC<Props> = ({ fnSetPokes, dataUserPokes }) => {
         rounded="lg"
         placeItems="center"
         gap={5}
-        width="md"
+        minW="200px"
+        maxW="xl"
         minHeight="sm"
       >
         {dataUserPokes.length === 0 && (

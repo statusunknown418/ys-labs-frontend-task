@@ -14,7 +14,8 @@ export const UserDefinedPoke: FC<Props> = ({ poke }) => {
       p={10}
       bgColor="#343d64"
       rounded="xl"
-      width="md"
+      minW="sm"
+      maxW="2xl"
     >
       <Heading color="white" textTransform="capitalize">
         {poke.name}
@@ -37,7 +38,7 @@ export const UserDefinedPoke: FC<Props> = ({ poke }) => {
           <Image src={poke.sprites.back_default} height={100} width={100} />
         )}
       </Box>
-      <Flex>
+      <Flex as="div">
         {poke.abilities.map((a) => (
           <Tag key={a.slot} colorScheme="teal" mx="3">
             {a.ability.name}

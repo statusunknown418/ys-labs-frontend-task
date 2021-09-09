@@ -30,7 +30,8 @@ export const PokeCard: FC<Props> = ({
       p="10"
       m={5}
       rounded="xl"
-      width="md"
+      minW="sm"
+      maxW="2xl"
       placeItems="center"
       bgColor="#343d64"
     >

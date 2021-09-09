@@ -22,9 +22,9 @@ export const SearchForPoke: FC<Props> = ({
   }, []);
   console.log(search);
   return (
-    <FormControl id="searchPoke" maxW="4xl" color="white">
+    <FormControl id="searchPoke" minW="sm" maxW="2xl" color="white">
       <FormLabel fontSize="sm">Search for a Pokemon</FormLabel>
-      <Flex alignItems="center">
+      <Flex alignItems="center" justifyContent="space-between">
         <Input
           type="text"
           placeholder="Search for your desired Pokemon"
@@ -32,7 +32,7 @@ export const SearchForPoke: FC<Props> = ({
         />
         <Button
           fontSize="sm"
-          mx={2}
+          ml="1"
           type="submit"
           colorScheme="yellow"
           onClick={() => getPoKemonName(search)}
@@ -42,7 +42,7 @@ export const SearchForPoke: FC<Props> = ({
       </Flex>
       {pokemonData && (
         <Button
-          mt={2}
+          mt="2"
           fontSize="sm"
           colorScheme="purple"
           onClick={() => {
