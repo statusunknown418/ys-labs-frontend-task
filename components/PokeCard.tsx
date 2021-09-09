@@ -36,13 +36,23 @@ export const PokeCard: FC<Props> = ({
     >
       {userPokes.length === 6 && (
         <Badge padding={1} mb={5} rounded="md" colorScheme="red">
-          Please remove any of your pokes to continue
+          Please remove any of your pokemons to continue
         </Badge>
       )}
 
       <Heading color="white" textAlign="center" textTransform="uppercase">
         {pokemonData.name}
       </Heading>
+      <Box mt={3} bg="whiteAlpha.300" p={2} rounded="lg">
+        <Flex as="div">
+          <Heading fontSize="xl" color="purple.300" mr={10}>
+            HP: {pokemonData.stats[0].base_stat}
+          </Heading>
+          <Heading fontSize="xl" color="red.400">
+            Attack Power: {pokemonData.stats[1].base_stat}
+          </Heading>
+        </Flex>
+      </Box>
       <Box rounded="lg">
         <Image
           src={pokemonData.sprites.front_default}
@@ -57,8 +67,9 @@ export const PokeCard: FC<Props> = ({
           />
         )}
       </Box>
+
       <Center>
-        <Flex>
+        <Flex as="div">
           {pokemonData.abilities.map((a) => (
             <Tag key={a.slot} colorScheme="teal" mx="3">
               {a.ability.name}

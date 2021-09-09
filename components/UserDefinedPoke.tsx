@@ -19,6 +19,16 @@ export const UserDefinedPoke: FC<Props> = ({ poke }) => {
       <Heading color="white" textTransform="capitalize">
         {poke.name}
       </Heading>
+      <Box mt={3} bg="whiteAlpha.300" p={2} rounded="lg">
+        <Flex as="div">
+          <Heading fontSize="xl" color="purple.300" mr={10}>
+            HP: {poke.stats[0].base_stat}
+          </Heading>
+          <Heading fontSize="xl" color="red.400">
+            Attack Power: {poke.stats[1].base_stat}
+          </Heading>
+        </Flex>
+      </Box>
       <Box>
         {poke.sprites.front_default && (
           <Image src={poke.sprites.front_default} width={100} height={100} />

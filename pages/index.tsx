@@ -48,16 +48,20 @@ export default function Home() {
   const addToUserPocket = (pokemon) => {
     let newPoke = pokemon;
     let err2 = 0;
+    let errToAdd = 0;
     pokemon === null || (pokemon === undefined && err2++);
-    storedUserTeam.length === 6 && err2++;
+    storedUserTeam.length === 6 && errToAdd++;
 
     storedUserTeam.forEach((e) => {
       e.id === newPoke.id ? err2++ : console.log("alright");
     });
 
     // err2 === 0 && setUserPokes((prev) => [...prev, newPoke]);
-    err2 === 0 && setStoredUserTeam([...storedUserTeam, newPoke]);
     err2 === 0 &&
+      errToAdd === 0 &&
+      setStoredUserTeam([...storedUserTeam, newPoke]);
+    err2 === 0 &&
+      errToAdd === 0 &&
       toast({
         title: "Pokemon added to your team!",
         status: "success",
@@ -72,7 +76,7 @@ export default function Home() {
         duration: 1500,
         isClosable: true,
       });
-    if (err2 >= 2) {
+    if (errToAdd > 0) {
       console.log(err2);
       toast({
         title: "Limit Reached ",
@@ -176,7 +180,7 @@ export default function Home() {
         </Button>
 
         <Tag colorScheme="gray" fontSize="xs" fontWeight="bold">
-          Or just reload and don&apos;t worry your current team will be saved!!
+          Or just reload and don&apos;t worry, your current team will be saved!!
         </Tag>
 
         {/* Waiting spinner */}
@@ -198,6 +202,7 @@ export default function Home() {
       <Box textAlign="center" bg="#2a3050" color="white" pb={5}>
         Developed by &rarr;{" "}
         <a
+          rel="noreferrer"
           style={{ fontWeight: "bolder", textDecoration: "underline" }}
           href="https://github.com/AlvaroAquijeDiaz"
           target="_blank"
