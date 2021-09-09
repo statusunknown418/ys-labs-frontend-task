@@ -1,7 +1,7 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Button } from "@chakra-ui/react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Heading, Box } from "@chakra-ui/react";
 type Props = {
   getPoKemonName: (...args) => void;
@@ -17,10 +17,13 @@ export const SearchForPoke: FC<Props> = ({
   setterFn,
 }) => {
   const [search, setSearch] = useState("");
+  useEffect(() => {
+    setSearch("");
+  }, []);
   console.log(search);
   return (
     <FormControl id="searchPoke" maxW="4xl">
-      <FormLabel>Search for Pokemon</FormLabel>
+      <FormLabel>Search for a Pokemon</FormLabel>
       <Input
         type="text"
         placeholder="Search for your desired Pokemon"
